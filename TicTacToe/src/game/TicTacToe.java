@@ -25,19 +25,29 @@ public class TicTacToe {
 		
 		while(true) {
 			Scanner scan = new Scanner(System.in);
-
 			System.out.println("Enter your placement(1-9):");
 			int pos =  scan.nextInt();
+			while(playerPositions.contains(pos)|| computerPositions.contains(pos)) {
+				System.out.println("position taken, choose another one");
+				pos =scan.nextInt();
+				
+			}
 			System.out.println(pos);
 			
 			placePiece(gameBoard, pos, "player");
 			
 			Random random = new Random();
 			int computerPos= random.nextInt(9)+1;
+			while(computerPositions.contains(pos)|| playerPositions.contains(computerPos)) {
+				 computerPos= random.nextInt(9)+1;
+
+				
+			}
 			placePiece(gameBoard, computerPos, "computer");
 			pringGameBoard(gameBoard);
 			
-			checkWinner();
+			String result = checkWinner();
+			System.out.println(result);
 		}
 		
 
@@ -58,9 +68,11 @@ public class TicTacToe {
 	public static void placePiece(char[][]gameBoard, int pos, String user) {
 		char symbol=' ';
 		if(user.equals("player")) {
-			symbol = 'X';			
+			symbol = 'X';
+			playerPositions.add(pos);
 		}else if(user.equals("computer")) {
 			symbol='O';
+			computerPositions.add(pos);
 			
 		}
 		
